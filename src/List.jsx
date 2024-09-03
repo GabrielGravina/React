@@ -1,27 +1,35 @@
+import PropTypes from 'prop-types'
+
+function List(props){
+
+    const category = props.category
+    const itemList = props.items;
+
+    const listItems = itemList.map(item => <li key={item.id}>
+                                            {item.name}: &nbsp;
+                                            {item.calories}</li>);
 
 
-function List(  ){
+    return (
+    <>
+        <h3 className="list-category">{category}</h3>
+        <ol className="list-items">{listItems}</ol>
+    </>)
+}
 
-    const fruits = [
-        {id: 1, name:"Orange", calories: 45}, 
-        {id: 2, name:"Apple", calories: 90}, 
-        {id: 3, name:"Watermelon", calories: 75}, 
-        {id: 4, name:"Strawberry", calories: 30}, 
-        
-    ];
-
-    fruits.sort((a, b) => b.calories - a.calories);
-
-
-    const lowCalFruits = fruits.filter(fruit => fruits.calories < 100)
-
-    const listItems = fruits.map(fruit => <li key={fruit.id}>
-                                            {fruit.name}: &nbsp;
-                                            {fruit.calories}</li>);
+List.propTypes = {
+    category: PropTypes.string,
+    items: PropTypes.arrayOf(PropTypes.shape({id: PropTypes.number, 
+                                              name: PropTypes.string,
+                                              calories: PropTypes.number}
+    ))
+}
 
 
-    return (<ol>{listItems}</ol>)
-
+List.defaultProps = {
+    category: "Category not found",
+    // Caso não haja array, haverá um array vazio
+    items: [],
 }
 
 export default List
